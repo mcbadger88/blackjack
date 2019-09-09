@@ -20,11 +20,10 @@ function countCards(cards) {
 }
 
 function displayCards(userCards, dealerCards) {
-    console.log(`Player Cards (${countCards(userCards)}):`)
-    console.log(userCards)
-    // console.log(`Dealer Cards (${countCards(dealerCards)}):`)
-    console.log(`Dealer Cards:`)
-    console.log(dealerCards)
+    console.log(`   Player Cards (${countCards(userCards)}):`)
+    console.table(userCards)
+    console.log(`   Dealer Cards (${countCards(dealerCards)}):`)
+    console.table(dealerCards)
 }
 
 
@@ -34,7 +33,7 @@ while (userInput != 0) {
     const deck = new classes.Deck()
     //shuffle deck
     deck.shuffle()
-    console.log(deck.cardArray)
+    // console.log(deck.cardArray)
     //create user and dealer
     user = new classes.Player()
     dealer = new classes.Player()
@@ -53,7 +52,7 @@ while (userInput != 0) {
     dealer.addCard(card3)
     dealer.addCard(card4)
     //display cards
-    displayCards(user.getCards(), dealer.getCards()[0])
+    displayCards(user.getCards(), new Array(dealer.getCards()[0]))
     //  "Player cards"
     //   user.displayCards
     //  "Dealer Cards"
@@ -64,25 +63,41 @@ while (userInput != 0) {
         switch(userInput) {
             case "hit":
                 const card = deck.getCard()
+                console.log(`You chose to Hit, you got card:`)
+                console.log(card)
                 user.addCard(card)
-                //if hand is bust, exit loop and game
+                //if hand is bust, exit loop and game                
                 let userCards = user.getCards()
                 console.log()
                 let cardTotal = countCards(userCards)
                 if(cardTotal == 21) {
                     //win
-                    console.log("You got 21 - You Win!!")
+                    console.log("   You got 21 - You Win!!")
+                    displayCards(user.getCards(), dealer.getCards())
                     userInput = 0
                 } else if(cardTotal > 21) {
                     // lose
-                    console.log(`You've busted!! You're score is ${cardTotal} Dealer wins`)
+                    console.log(`   You've busted!! You're score is ${cardTotal} Dealer wins`)
                     userInput = 0
+                    displayCards(user.getCards(), dealer.getCards())
+                } else {
+                    displayCards(user.getCards(), new Array(dealer.getCards()[0]))
                 }
-                displayCards(user.getCards(), dealer.getCards()[0])
                 break;
             case "stand":
+                console.log("You chose to stand, dealer reveals cards and plays")
                 // disply dealer cards (dealer.displayCards)
-                //dealer.hitWhileLessThanUserAndUnder17
+                displayCards(user.getCards(), dealer.getCards())
+                // dealer hits until they are over 17
+                while(countCards(dealer.getCards()) < 17) {
+                    dealer.addCard(deck.getCard())
+                }
+                console.log(`${
+                    countCards(dealer.getCards()) <= countCards(user.getCards()) ? "You" : "Dealer"
+                } WINS !!!!!`)
+                displayCards(user.getCards(), dealer.getCards())
+                userInput = 0
+
                 break;
             default:
                 console.log("Invalid Choice")

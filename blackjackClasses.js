@@ -11,7 +11,7 @@ class Deck {
                 })
             })
         })
-        console.log(this.cardArray)
+        // console.log(this.cardArray)
     }
 
     shuffle() {
