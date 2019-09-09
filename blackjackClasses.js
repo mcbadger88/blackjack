@@ -15,7 +15,7 @@ class Deck {
     }
 
     shuffle() {
-        for(let i = 0; i < this.cardArray.length; i++) {
+        for(let i = 0; i < 500; i++) {
             let index1 = Math.floor(Math.random() * this.cardArray.length)
             let index2 = Math.floor(Math.random() * this.cardArray.length)
             let card1 = this.cardArray[index1]

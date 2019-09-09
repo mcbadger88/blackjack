@@ -4,7 +4,22 @@ const classes = require('./blackjackClasses.js')
 
 let userInput = readlineSync.question('Welcome to BlackJack. Press 1 to deal or 0 to quit');
 
+function aceChange(card){
+    if(card.value = "11"){
+        card.value = "1"
+    }
+}
 
+function checkAce(user){
+    user.hand.forEach(card=>{
+        if(card.value === "11"){
+            return true
+        }
+        else{
+            return false
+        }
+    })
+}
 function countCards(cards) {
     let total = 0;
     let value;
@@ -48,11 +63,18 @@ while (userInput != 0) {
 
     user.addCard(card1) 
     user.addCard(card2) 
+    console.log(user.hand)
 
     dealer.addCard(card3)
     dealer.addCard(card4)
     //display cards
     displayCards(user.getCards(), new Array(dealer.getCards()[0]))
+    if(countCards(user.getCards()) == 21) {
+        //win
+        console.log("   You got 21 - You Win!!")
+        displayCards(user.getCards(), dealer.getCards())
+        userInput = 0
+    }
     //  "Player cards"
     //   user.displayCards
     //  "Dealer Cards"
@@ -75,12 +97,22 @@ while (userInput != 0) {
                     console.log("   You got 21 - You Win!!")
                     displayCards(user.getCards(), dealer.getCards())
                     userInput = 0
-                } else if(cardTotal > 21) {
+                } 
+                else if(cardTotal > 21 && checkAce(user)) {
+                    user.hand.forEach(card => {
+                        if(card.value == "11"){
+                            card.value = "1"
+                        }
+                    })
+                    displayCards(user.getCards(), new Array(dealer.getCards()[0]))
+                }
+                else if(cardTotal > 21) {
                     // lose
                     console.log(`   You've busted!! You're score is ${cardTotal} Dealer wins`)
                     userInput = 0
                     displayCards(user.getCards(), dealer.getCards())
-                } else {
+                } //
+                else {
                     displayCards(user.getCards(), new Array(dealer.getCards()[0]))
                 }
                 break;
