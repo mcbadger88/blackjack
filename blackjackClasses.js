@@ -6,8 +6,7 @@ class Deck {
             ["2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "J", "Q", "K"].forEach( value => {
                 this.cardArray.push({
                     suit: suit,
-                    value: value,
-                    dealt: false
+                    value: value
                 })
             })
         })
@@ -39,14 +38,6 @@ class Deck {
 class Player {
     constructor() {
         this.hand = []
-    }
-
-    hit() {
-
-    }
-
-    stand() {
-
     }
 
     addCard(card) {

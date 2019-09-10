@@ -80,7 +80,7 @@ while (userInput != 0) {
     //  "Dealer Cards"
     //  dealer.displayOneCard
     while(userInput != 0) {
-        userInput = readlineSync.question('Hit or Stand? (enter 0 to exit)');
+        userInput = readlineSync.question('Hit or Stand? (please type "hit", "stand", or enter 0 to exit)');
 
         switch(userInput) {
             case "hit":
